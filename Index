@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>M3SKW SYSTEM</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #0b1220; /* กันจอกะพริบขาวตอนโหลด ปรับให้ตรงกับพื้นหลังแอปจริงได้ */
+    overflow: hidden;
+  }
+  #appFrame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh; /* dvh กันปัญหาแถบ address bar ของมือถือบังพื้นที่ */
+    border: 0;
+    display: block;
+  }
+  #loading {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cbd5e1;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 0.95rem;
+    transition: opacity .25s ease;
+  }
+  #loading.hide { opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+
+  <div id="loading">กำลังโหลดระบบ...</div>
+
+  <!--
+    ★ แก้ไขตรงนี้ ★
+    เปลี่ยน src ด้านล่างให้เป็นลิงก์ /exec ของ Apps Script Web App ที่ deploy ไว้จริง
+  -->
+  <iframe
+    id="appFrame"
+    src="https://script.google.com/macros/s/AKfycby92bydmDv0mZjxEvN4gmFf83uUJGggQWoSi5uphJ9i-dpdGiogSYQXCum1-H3qE-Jy/exec"
+    allow="clipboard-read; clipboard-write"
+  ></iframe>
+
+  <script>
+    var frame = document.getElementById('appFrame');
+    var loading = document.getElementById('loading');
+    frame.addEventListener('load', function () {
+      loading.classList.add('hide');
+    });
+    // กันเคสโหลดช้าผิดปกติ ซ่อน loading ทิ้งหลัง 8 วิ เผื่อ event load ไม่ยิง
+    setTimeout(function () { loading.classList.add('hide'); }, 8000);
+  </script>
+
+</body>
+</html>
